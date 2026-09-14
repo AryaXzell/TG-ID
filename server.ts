@@ -81,11 +81,11 @@ async function startServer() {
 async function startTelegramBot() {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   if (!botToken) {
-    console.warn('⚠️ TELEGRAM_BOT_TOKEN is not defined in environment variables. Telegram Bot functionality is disabled.');
+    console.warn('[!] TELEGRAM_BOT_TOKEN is not defined in environment variables. Telegram Bot functionality is disabled.');
     return;
   }
 
-  console.log('🤖 Telegram Bot Client Initializing (Long Polling)...');
+  console.log('[System] Telegram Bot Client Initializing (Long Polling)...');
   let offset = 0;
 
   // Run the polling loop indefinitely
@@ -110,21 +110,21 @@ async function startTelegramBot() {
 
             if (text.toLowerCase() === '/start') {
               // Welcome command greeting & self resolution info
-              const welcomeMessage = `👋 *Welcome to TG ID Bot!*
+              const welcomeMessage = `*Welcome to TG ID Bot!*
 
 I can help you resolve Telegram usernames, public group links, or channel URLs to their unique Telegram IDs and detailed metadata.
 
-👤 *Your Details (Registered):*
+*Your Details (Registered):*
 • *User ID:* \`${from.id}\`
 • *First Name:* \`${from.first_name || 'None'}\`
 • *Username:* ${from.username ? `@${from.username}` : '`None`'}
 
-🎉 *Good News:* Because you have started a chat with me, you (and others) can now successfully resolve your username on our Web App!
+*Information:* Because you have started a chat with me, you (and others) can now successfully resolve your username on our Web App!
 
-🌐 *Web App Link:*
+*Web App Link:*
 [Open TG ID Web Utility](https://ais-pre-77qvwewsow33gkoow5a5sz-849616957889.asia-southeast1.run.app)
 
-💬 *How to use me:*
+*How to use me:*
 Simply send me any username (e.g., \`@durov\`), link (e.g., \`t.me/durov\`), or numeric ID, and I will resolve it for you instantly!`;
 
               await sendBotMessage(botToken, chatId, welcomeMessage);
@@ -177,7 +177,7 @@ async function handleBotResolution(token: string, chatId: number, input: string)
     // Prepare API chat_id query
     const apiTargetId = /^-?\d+$/.test(target) ? target : `@${target}`;
 
-    await sendBotMessage(token, chatId, `🔍 Resolving \`${input}\`...`);
+    await sendBotMessage(token, chatId, `Resolving \`${input}\`...`);
 
     const chatRes = await fetch(`https://api.telegram.org/bot${token}/getChat`, {
       method: 'POST',
@@ -194,7 +194,7 @@ async function handleBotResolution(token: string, chatId: number, input: string)
       const bio = result.bio || result.description || 'None';
       const username = result.username ? `@${result.username}` : 'None';
 
-      const responseMessage = `✅ *Telegram Resolution Result*
+      const responseMessage = `*Telegram Resolution Result*
 
 • *Title/Name:* \`${title}\`
 • *ID:* \`${result.id}\`
@@ -202,7 +202,7 @@ async function handleBotResolution(token: string, chatId: number, input: string)
 • *Username:* ${username}
 • *Bio/Description:* \`${bio}\`
 
-🌐 *Resolve on the Web:*
+*Resolve on the Web:*
 [Open TG ID Web Utility](https://ais-pre-77qvwewsow33gkoow5a5sz-849616957889.asia-southeast1.run.app)`;
 
       await sendBotMessage(token, chatId, responseMessage);
@@ -211,7 +211,7 @@ async function handleBotResolution(token: string, chatId: number, input: string)
       await sendBotMessage(
         token,
         chatId,
-        `❌ *Resolution Failed*
+        `*Resolution Failed*
 
 Could not find or resolve this handle.
 • *Reason:* \`${desc}\`
@@ -220,7 +220,7 @@ Could not find or resolve this handle.
       );
     }
   } catch (err: any) {
-    await sendBotMessage(token, chatId, `❌ *Internal Resolution Error:* \`${err.message || err}\``);
+    await sendBotMessage(token, chatId, `*Internal Resolution Error:* \`${err.message || err}\``);
   }
 }
 
