@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-color: #FFF9FB;
+    --surface-color: #FFFFFF;
+    --surface-color-2: #FBF1F4;
+    --primary-color: #D95C83;
+    --primary-hover-color: #C14A6E;
+    --text-color: #282329;
+    --text-secondary: #766E74;
+    --border-color: #EDE4E8;
+    --success-color: #3F8F6B;
+    --shadow-sm: 0 1px 2px rgba(40, 35, 41, 0.04);
+    --shadow-md: 0 4px 12px rgba(40, 35, 41, 0.05);
+  }
+
+  .dark {
+    --bg-color: #151216;
+    --surface-color: #1D191D;
+    --surface-color-2: #252025;
+    --primary-color: #E982A2;
+    --primary-hover-color: #EF9FB7;
+    --text-color: #F7F1F4;
+    --text-secondary: #B9AFB5;
+    --border-color: #393239;
+    --success-color: #72C49D;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow-x: hidden;
+  }
+}
+
+/* Base custom classes to assist semantic vanilla design constraints */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover-color);
+}
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Beautiful custom perimeter border glow rotation (Section 28 of PRD) */
+@keyframes rotate-border {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-button-glow {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent !important;
+  color: var(--primary-color) !important;
+  border-color: transparent !important;
+}
+
+.loading-button-glow::before {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 400%;
+  height: 400%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 60%,
+    var(--primary-color) 85%,
+    var(--primary-color) 100%
+  );
+  animation: rotate-border 1.4s linear infinite;
+  z-index: -2;
+}
+
+.loading-button-glow::after {
+  content: '';
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  right: 1.5px;
+  bottom: 1.5px;
+  background: var(--surface-color);
+  border-radius: 11px;
+  z-index: -1;
+  transition: background 0.2s ease;
+}
+
+.dark .loading-button-glow::after {
+  background: var(--surface-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-button-glow::before {
+    animation: none;
+    background: var(--primary-color);
+    opacity: 0.4;
+  }
+}
+
+/* Code block custom container scrollbar (Section 35) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Outline focus rings (Section 55) */
+*:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "TG ID",
+  "description": "A lightweight, secure, and fast web utility for resolving legitimate Telegram identifiers and forum topic IDs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
