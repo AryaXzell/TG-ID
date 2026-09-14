@@ -61,18 +61,20 @@ export const Header: React.FC<HeaderProps> = ({ id = 'app-header' }) => {
         </div>
       </div>
 
-      <button
-        id="theme-toggle-button"
-        onClick={toggleTheme}
-        className="flex items-center justify-center w-9 h-9 rounded-xl border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-color)] hover:bg-[var(--border-color)] hover:bg-opacity-20 transition-all duration-200"
-        aria-label="Toggle theme"
-      >
-        {isDark ? (
-          <Sun id="sun-icon" className="w-4 h-4 transition-transform hover:rotate-45 duration-300" />
-        ) : (
-          <Moon id="moon-icon" className="w-4 h-4 transition-transform hover:-rotate-12 duration-300" />
-        )}
-      </button>
+      <div className="flex items-center space-x-2" id="header-actions">
+        <button
+          id="theme-toggle-button"
+          onClick={toggleTheme}
+          className="flex items-center justify-center w-9 h-9 rounded-xl border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-color)] hover:bg-[var(--border-color)] hover:bg-opacity-20 transition-all duration-200"
+          aria-label="Toggle theme"
+        >
+          {isDark ? (
+            <Sun id="sun-icon" className="w-4 h-4 transition-transform hover:rotate-45 duration-300" />
+          ) : (
+            <Moon id="moon-icon" className="w-4 h-4 transition-transform hover:-rotate-12 duration-300" />
+          )}
+        </button>
+      </div>
     </header>
   );
 };
